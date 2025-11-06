@@ -1,6 +1,6 @@
 # Get Vaccine Recommendations
 
-A React + Vite web application that provides personalized vaccine recommendations based on CDC schedules.
+A React + Vite web application that provides personalized vaccine recommendations based on CDC schedules
 
 ## Features
 
