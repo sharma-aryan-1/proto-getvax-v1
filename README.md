@@ -1,4 +1,4 @@
-# Get Vaccine Recommendations
+# Proto GetVax
 
 A React + Vite web application that provides personalized vaccine recommendations based on CDC schedules
 
