@@ -1022,3 +1022,62 @@ body {
 }
 
 
+/* QR Code Section Styling */
+.qr-code-section {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 2px solid var(--border-color);
+  text-align: center;
+}
+
+.qr-code-section h3 {
+  color: #0066cc;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.dark-mode .qr-code-section h3 {
+  color: #5ba3ff;
+}
+
+.qr-description {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+.qr-code-container {
+  background: white;
+  padding: 1rem;
+  border-radius: 12px;
+  display: inline-block;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+}
+
+.dark-mode .qr-code-container {
+  background: #ffffff;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+.qr-code-image {
+  display: block;
+  width: 180px;
+  height: 180px;
+  border-radius: 8px;
+}
+
+.qr-note {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  max-width: 280px;
+  margin: 0 auto;
+}
+
+/* Hide QR code on mobile (they're already on mobile!) */
+@media (max-width: 768px) {
+  .qr-code-section {
+    display: none;
+  }
+}

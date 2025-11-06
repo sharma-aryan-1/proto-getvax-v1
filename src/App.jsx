@@ -12,8 +12,10 @@ function App() {
   // Dark mode state
   const [darkMode, setDarkMode] = useState(() => {
     const savedMode = localStorage.getItem('darkMode')
-    return savedMode === 'true'
+    // If user has saved preference, use it; otherwise default to dark (true)
+    return savedMode !== null ? savedMode === 'true' : true
   })
+
 
   // Add checkbox tracking state
   const [checkedVaccines, setCheckedVaccines] = useState({})
@@ -320,6 +322,26 @@ function App() {
                     Clear Form
                   </button>
                 </div>
+
+                
+                {/* NEW QR CODE SECTION */}
+                <div className="qr-code-section">
+                  <h3>Quick Mobile Access</h3>
+                  <p className="qr-description">Scan to open on your phone</p>
+                  <div className="qr-code-container">
+                    <img 
+                      src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent('https://proto-getvax-v1.vercel.app/')}`}
+                      alt="QR Code for mobile access"
+                      className="qr-code-image"
+                      loading="lazy"
+                    />
+                  </div>
+                  <p className="qr-note">
+                    Point your phone's camera at the QR code to access this tool on mobile
+                  </p>
+                </div>
+
+
               </form>
             </div>
           </div>
