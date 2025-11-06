@@ -1,0 +1,608 @@
+{
+  "medical_conditions": [
+    {
+      "id": "pregnancy",
+      "label": "Pregnancy"
+    },
+    {
+      "id": "immunocompromised",
+      "label": "Immunocompromised (excluding HIV)"
+    },
+    {
+      "id": "hiv_low",
+      "label": "HIV infection (CD4 <15% or <200/mm\u00b3)"
+    },
+    {
+      "id": "hiv_high",
+      "label": "HIV infection (CD4 \u226515% and \u2265200/mm\u00b3)"
+    },
+    {
+      "id": "msm",
+      "label": "Men who have sex with men"
+    },
+    {
+      "id": "asplenia",
+      "label": "Asplenia or complement deficiency"
+    },
+    {
+      "id": "heart_lung",
+      "label": "Heart or lung disease"
+    },
+    {
+      "id": "kidney",
+      "label": "Kidney failure, ESRD, or on dialysis"
+    },
+    {
+      "id": "liver",
+      "label": "Chronic liver disease or alcoholism"
+    },
+    {
+      "id": "diabetes",
+      "label": "Diabetes"
+    },
+    {
+      "id": "healthcare",
+      "label": "Healthcare personnel"
+    }
+  ],
+  "vaccines": [
+    {
+      "name": "COVID-19",
+      "age_groups": [
+        {
+          "min": 0,
+          "max": 18,
+          "recommendation": "Individual-based decision-making - consult healthcare provider"
+        },
+        {
+          "min": 19,
+          "max": 64,
+          "recommendation": "1 or more doses of current vaccine"
+        },
+        {
+          "min": 65,
+          "max": 120,
+          "recommendation": "2 or more doses of current vaccine"
+        }
+      ],
+      "gender_specific": false,
+      "description": "Protection against COVID-19",
+      "frequency": "Annual or as recommended",
+      "medical_conditions": {
+        "pregnancy": {
+          "recommendation": "See healthcare provider",
+          "priority": "standard"
+        },
+        "immunocompromised": {
+          "recommendation": "Additional doses may be necessary",
+          "priority": "high"
+        },
+        "hiv_low": {
+          "recommendation": "Additional doses may be necessary",
+          "priority": "high"
+        },
+        "hiv_high": {
+          "recommendation": "Additional doses may be necessary",
+          "priority": "high"
+        },
+        "healthcare": {
+          "recommendation": "Stay up to date with vaccinations",
+          "priority": "high"
+        }
+      }
+    },
+    {
+      "name": "Influenza (Flu)",
+      "age_groups": [
+        {
+          "min": 6,
+          "max": 120,
+          "recommendation": "1 dose annually"
+        }
+      ],
+      "gender_specific": false,
+      "description": "Protection against seasonal flu",
+      "frequency": "Annual",
+      "medical_conditions": {
+        "pregnancy": {
+          "recommendation": "1 dose annually (inactivated or recombinant)",
+          "priority": "high"
+        },
+        "immunocompromised": {
+          "recommendation": "1 dose annually (inactivated or recombinant only)",
+          "priority": "high"
+        },
+        "hiv_low": {
+          "recommendation": "1 dose annually (inactivated or recombinant only)",
+          "priority": "high"
+        },
+        "hiv_high": {
+          "recommendation": "1 dose annually",
+          "priority": "high"
+        },
+        "heart_lung": {
+          "recommendation": "1 dose annually",
+          "priority": "high"
+        },
+        "kidney": {
+          "recommendation": "1 dose annually",
+          "priority": "high"
+        },
+        "liver": {
+          "recommendation": "1 dose annually",
+          "priority": "high"
+        },
+        "diabetes": {
+          "recommendation": "1 dose annually",
+          "priority": "high"
+        },
+        "healthcare": {
+          "recommendation": "1 dose annually",
+          "priority": "high"
+        }
+      }
+    },
+    {
+      "name": "RSV (Respiratory Syncytial Virus)",
+      "age_groups": [
+        {
+          "min": 60,
+          "max": 74,
+          "recommendation": "1 dose if at increased risk"
+        },
+        {
+          "min": 75,
+          "max": 120,
+          "recommendation": "1 dose"
+        }
+      ],
+      "gender_specific": false,
+      "gender_notes": {
+        "female": "1 dose during pregnancy (weeks 32-36) if in RSV season"
+      },
+      "description": "Protection against RSV",
+      "frequency": "Single dose",
+      "medical_conditions": {
+        "pregnancy": {
+          "recommendation": "Seasonal administration during pregnancy (weeks 32-36)",
+          "priority": "high"
+        },
+        "immunocompromised": {
+          "recommendation": "See healthcare provider",
+          "priority": "standard"
+        },
+        "heart_lung": {
+          "recommendation": "See healthcare provider (age \u226560)",
+          "priority": "high"
+        },
+        "liver": {
+          "recommendation": "See healthcare provider if liver disease",
+          "priority": "standard"
+        },
+        "kidney": {
+          "recommendation": "See healthcare provider (age \u226560)",
+          "priority": "high"
+        }
+      }
+    },
+    {
+      "name": "Tdap/Td (Tetanus, Diphtheria, Pertussis)",
+      "age_groups": [
+        {
+          "min": 19,
+          "max": 120,
+          "recommendation": "1 dose Tdap, then Td or Tdap booster every 10 years"
+        }
+      ],
+      "gender_specific": false,
+      "gender_notes": {
+        "female": "1 dose Tdap during each pregnancy (weeks 27-36)"
+      },
+      "description": "Protection against tetanus, diphtheria, and whooping cough",
+      "frequency": "Every 10 years, pregnancy dose for women",
+      "medical_conditions": {
+        "pregnancy": {
+          "recommendation": "1 dose Tdap each pregnancy (weeks 27-36)",
+          "priority": "high"
+        },
+        "immunocompromised": {
+          "recommendation": "1 dose Tdap, then Td/Tdap booster every 10 years",
+          "priority": "standard"
+        },
+        "hiv_low": {
+          "recommendation": "1 dose Tdap, then Td/Tdap booster every 10 years",
+          "priority": "standard"
+        },
+        "hiv_high": {
+          "recommendation": "1 dose Tdap, then Td/Tdap booster every 10 years",
+          "priority": "standard"
+        }
+      }
+    },
+    {
+      "name": "MMR (Measles, Mumps, Rubella)",
+      "age_groups": [
+        {
+          "min": 19,
+          "max": 68,
+          "recommendation": "1 or 2 doses if no evidence of immunity"
+        },
+        {
+          "min": 69,
+          "max": 120,
+          "recommendation": "Not routinely recommended"
+        }
+      ],
+      "gender_specific": false,
+      "description": "Protection against measles, mumps, and rubella",
+      "frequency": "Once or twice depending on risk",
+      "medical_conditions": {
+        "pregnancy": {
+          "recommendation": "CONTRAINDICATED - vaccinate after pregnancy if indicated",
+          "priority": "contraindicated"
+        },
+        "immunocompromised": {
+          "recommendation": "Generally contraindicated - consult specialist",
+          "priority": "contraindicated"
+        },
+        "hiv_low": {
+          "recommendation": "Generally contraindicated - consult specialist",
+          "priority": "contraindicated"
+        },
+        "hiv_high": {
+          "recommendation": "May be indicated - consult specialist",
+          "priority": "caution"
+        },
+        "healthcare": {
+          "recommendation": "1 or 2 doses if no evidence of immunity",
+          "priority": "high"
+        }
+      }
+    },
+    {
+      "name": "Varicella (Chickenpox)",
+      "age_groups": [
+        {
+          "min": 19,
+          "max": 120,
+          "recommendation": "2 doses (4-8 weeks apart) if no evidence of immunity"
+        }
+      ],
+      "gender_specific": false,
+      "description": "Protection against chickenpox",
+      "frequency": "2-dose series",
+      "medical_conditions": {
+        "pregnancy": {
+          "recommendation": "CONTRAINDICATED - vaccinate after pregnancy if indicated",
+          "priority": "contraindicated"
+        },
+        "immunocompromised": {
+          "recommendation": "See healthcare provider - may be contraindicated",
+          "priority": "caution"
+        },
+        "hiv_low": {
+          "recommendation": "Generally contraindicated",
+          "priority": "contraindicated"
+        },
+        "hiv_high": {
+          "recommendation": "See healthcare provider",
+          "priority": "caution"
+        },
+        "healthcare": {
+          "recommendation": "2 doses if no evidence of immunity",
+          "priority": "high"
+        }
+      }
+    },
+    {
+      "name": "Shingles (Zoster)",
+      "age_groups": [
+        {
+          "min": 50,
+          "max": 120,
+          "recommendation": "2 doses (2-6 months apart)"
+        }
+      ],
+      "gender_specific": false,
+      "description": "Protection against shingles",
+      "frequency": "2-dose series",
+      "medical_conditions": {
+        "immunocompromised": {
+          "recommendation": "2 doses for immunocompromising conditions (age \u226519)",
+          "priority": "high"
+        },
+        "hiv_low": {
+          "recommendation": "2 doses (age \u226519)",
+          "priority": "high"
+        },
+        "hiv_high": {
+          "recommendation": "2 doses (age \u226519)",
+          "priority": "high"
+        },
+        "pregnancy": {
+          "recommendation": "See healthcare provider",
+          "priority": "caution"
+        }
+      }
+    },
+    {
+      "name": "HPV (Human Papillomavirus)",
+      "age_groups": [
+        {
+          "min": 19,
+          "max": 26,
+          "recommendation": "2 or 3 doses if not previously vaccinated"
+        },
+        {
+          "min": 27,
+          "max": 45,
+          "recommendation": "Based on shared clinical decision-making"
+        }
+      ],
+      "gender_specific": false,
+      "description": "Protection against HPV-related cancers",
+      "frequency": "2 or 3 dose series",
+      "medical_conditions": {
+        "pregnancy": {
+          "recommendation": "CONTRAINDICATED - defer until after pregnancy",
+          "priority": "contraindicated"
+        },
+        "immunocompromised": {
+          "recommendation": "3-dose series if indicated",
+          "priority": "high"
+        },
+        "hiv_low": {
+          "recommendation": "3-dose series",
+          "priority": "high"
+        },
+        "hiv_high": {
+          "recommendation": "3-dose series",
+          "priority": "high"
+        },
+        "msm": {
+          "recommendation": "2 or 3 doses through age 26",
+          "priority": "high"
+        }
+      }
+    },
+    {
+      "name": "Pneumococcal (PCV/PPSV)",
+      "age_groups": [
+        {
+          "min": 50,
+          "max": 64,
+          "recommendation": "1 dose PCV15 or PCV20 or PCV21 if never vaccinated"
+        },
+        {
+          "min": 65,
+          "max": 120,
+          "recommendation": "1 dose PCV15 or PCV20 or PCV21"
+        }
+      ],
+      "gender_specific": false,
+      "description": "Protection against pneumococcal disease",
+      "frequency": "Once or twice depending on vaccine type",
+      "medical_conditions": {
+        "immunocompromised": {
+          "recommendation": "Recommended (age \u226519) - see Notes",
+          "priority": "high"
+        },
+        "hiv_low": {
+          "recommendation": "Recommended (age \u226519) - see Notes",
+          "priority": "high"
+        },
+        "hiv_high": {
+          "recommendation": "Recommended (age \u226519) - see Notes",
+          "priority": "high"
+        },
+        "asplenia": {
+          "recommendation": "Recommended (age \u226519) - see Notes",
+          "priority": "high"
+        },
+        "heart_lung": {
+          "recommendation": "Recommended (age \u226519) - see Notes",
+          "priority": "high"
+        },
+        "kidney": {
+          "recommendation": "Recommended (age \u226519) - see Notes",
+          "priority": "high"
+        },
+        "liver": {
+          "recommendation": "Recommended (age \u226519) - see Notes",
+          "priority": "high"
+        },
+        "diabetes": {
+          "recommendation": "Recommended (age \u226519) - see Notes",
+          "priority": "high"
+        }
+      }
+    },
+    {
+      "name": "Hepatitis A",
+      "age_groups": [
+        {
+          "min": 19,
+          "max": 120,
+          "recommendation": "2 doses (6-12 months apart) if at risk or requests vaccination"
+        }
+      ],
+      "gender_specific": false,
+      "description": "Protection against hepatitis A",
+      "frequency": "2-dose series",
+      "medical_conditions": {
+        "liver": {
+          "recommendation": "2-dose series recommended",
+          "priority": "high"
+        },
+        "msm": {
+          "recommendation": "2-dose series recommended",
+          "priority": "high"
+        },
+        "immunocompromised": {
+          "recommendation": "2-dose series if at risk",
+          "priority": "standard"
+        },
+        "hiv_low": {
+          "recommendation": "2-dose series if at risk",
+          "priority": "high"
+        },
+        "hiv_high": {
+          "recommendation": "2-dose series if at risk",
+          "priority": "high"
+        }
+      }
+    },
+    {
+      "name": "Hepatitis B",
+      "age_groups": [
+        {
+          "min": 19,
+          "max": 59,
+          "recommendation": "2, 3, or 4 dose series"
+        },
+        {
+          "min": 60,
+          "max": 120,
+          "recommendation": "May receive series if at risk or requests vaccination"
+        }
+      ],
+      "gender_specific": false,
+      "description": "Protection against hepatitis B",
+      "frequency": "2, 3, or 4 dose series",
+      "medical_conditions": {
+        "liver": {
+          "recommendation": "Complete vaccine series",
+          "priority": "high"
+        },
+        "kidney": {
+          "recommendation": "Complete vaccine series",
+          "priority": "high"
+        },
+        "diabetes": {
+          "recommendation": "Complete vaccine series (age 19-59)",
+          "priority": "high"
+        },
+        "hiv_low": {
+          "recommendation": "Complete vaccine series",
+          "priority": "high"
+        },
+        "hiv_high": {
+          "recommendation": "Complete vaccine series",
+          "priority": "high"
+        },
+        "msm": {
+          "recommendation": "Complete vaccine series",
+          "priority": "high"
+        },
+        "healthcare": {
+          "recommendation": "Complete vaccine series",
+          "priority": "high"
+        }
+      }
+    },
+    {
+      "name": "Meningococcal (MenACWY)",
+      "age_groups": [
+        {
+          "min": 19,
+          "max": 120,
+          "recommendation": "1 or more doses if at increased risk"
+        }
+      ],
+      "gender_specific": false,
+      "description": "Protection against meningococcal disease",
+      "frequency": "Based on risk factors",
+      "medical_conditions": {
+        "immunocompromised": {
+          "recommendation": "1 or 2 doses (see Notes for boosters)",
+          "priority": "high"
+        },
+        "hiv_low": {
+          "recommendation": "1 or 2 doses (see Notes for boosters)",
+          "priority": "high"
+        },
+        "hiv_high": {
+          "recommendation": "1 or 2 doses (see Notes for boosters)",
+          "priority": "high"
+        },
+        "asplenia": {
+          "recommendation": "2-dose series (see Notes for boosters)",
+          "priority": "high"
+        }
+      }
+    },
+    {
+      "name": "Meningococcal B (MenB)",
+      "age_groups": [
+        {
+          "min": 19,
+          "max": 23,
+          "recommendation": "2 or 3 doses depending on vaccine (age 16-23 based on shared clinical decision-making)"
+        }
+      ],
+      "gender_specific": false,
+      "description": "Protection against meningococcal B disease",
+      "frequency": "Based on risk factors",
+      "medical_conditions": {
+        "immunocompromised": {
+          "recommendation": "2 or 3 doses depending on vaccine (see Notes for boosters)",
+          "priority": "high"
+        },
+        "hiv_low": {
+          "recommendation": "2 or 3 doses depending on vaccine",
+          "priority": "high"
+        },
+        "hiv_high": {
+          "recommendation": "2 or 3 doses depending on vaccine",
+          "priority": "high"
+        },
+        "asplenia": {
+          "recommendation": "2 or 3 doses depending on vaccine (see Notes for boosters)",
+          "priority": "high"
+        }
+      }
+    },
+    {
+      "name": "Haemophilus influenzae type b (Hib)",
+      "age_groups": [],
+      "gender_specific": false,
+      "description": "Protection against Haemophilus influenzae type b",
+      "frequency": "Based on condition",
+      "medical_conditions": {
+        "immunocompromised": {
+          "recommendation": "3 doses if HSCT recipient",
+          "priority": "high"
+        },
+        "asplenia": {
+          "recommendation": "1 dose",
+          "priority": "high"
+        }
+      }
+    },
+    {
+      "name": "Mpox",
+      "age_groups": [],
+      "gender_specific": false,
+      "description": "Protection against mpox (monkeypox)",
+      "frequency": "2-dose series if at risk",
+      "medical_conditions": {
+        "msm": {
+          "recommendation": "2 doses if at risk",
+          "priority": "high"
+        },
+        "immunocompromised": {
+          "recommendation": "2 doses if at risk (see Notes)",
+          "priority": "high"
+        },
+        "hiv_low": {
+          "recommendation": "2 doses if at risk",
+          "priority": "high"
+        },
+        "hiv_high": {
+          "recommendation": "2 doses if at risk",
+          "priority": "high"
+        }
+      }
+    }
+  ]
+}
