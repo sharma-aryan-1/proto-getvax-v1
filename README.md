@@ -72,7 +72,9 @@ The application uses a JSON file (`vaccine_data_enhanced.json`) containing CDC i
 - Hepatitis A
 - Hepatitis B
 - RSV (Respiratory Syncytial Virus)
-- Meningococcal (MenACWY)
+- Meningococcal (MenACWY) and Meningococcal B (MenB)
+- Haemophilus influenzae type b (Hib)
+- Mpox
 
 And for medical conditions/other indications like:
 
