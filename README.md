@@ -29,14 +29,27 @@ A React + Vite web application that provides personalized vaccine recommendation
    npm install
    ```
 
-### Running the Application
+3. Install dependencies:
+   ```bash
+   npm install tailwind
+   ```
+4. Create .env with
+   ```bash
+   GOOGLE_MAPS_API_KEY=[key]
+   ```
 
-1. Start the development server:
+### Running the Application
+1. Start backend server
+   ```bash
+   npm run server:dev
+   ```
+   
+2. Start the development server:
    ```bash
    npm run dev
    ```
 
-2. Open the local link generated in the terminal:
+3. Open the local link generated in the terminal:
    ```
    http://localhost:5173 (or similar)
    ```
