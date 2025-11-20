@@ -616,7 +616,7 @@ function App() {
               {currentStep === 'recommendations' && recommendations && recommendations.length > 0 && (
                 <div>
                   <div className="mb-6 ml-8 mt-8">
-                    <div className="bg-primary/10 border-l-4 border-primary p-4 rounded-md mb-6 max-w-2xl mx-auto">
+                    <div className="bg-primary/10 border-l-4 border-primary p-4 rounded-md mb-6 mx-auto">
                       <h3 className="font-semibold mb-2 text-lg text-primary">You can still get protected!</h3>
                       <p className="text-primary-dark">
                         If you have missed any vaccines, it's not too late. Most people can catch up easily! Pharmacies and clinics are here to help.  
