@@ -344,12 +344,12 @@ function App() {
         <div className="max-w-7xl mx-auto">
           <h1 className="text-3xl font-semibold mb-2">GetVax</h1>
           <p className="text-lg mb-4 opacity-95">Get personalized vaccine recommendations based on your age, gender, and medical conditions/other indicators</p>
-          <p className="bg-white/15 px-4 py-3 rounded-lg text-sm border-l-4 border-yellow-400">
+          <div className="bg-white/15 px-4 py-3 rounded-lg text-sm border-l-4 border-yellow-400">
             <div className="flex items-start gap-2">
               <AlertTriangle className="w-5 h-5 flex-shrink-0 mt-0.5" />
               <span>This tool provides general guidance based on CDC schedules. Always consult with your healthcare provider.</span>
             </div>
-          </p>
+          </div>
           <button 
             onClick={toggleDarkMode} 
             className="absolute top-4 right-4 px-4 py-2 bg-white/20 border-2 border-white/30 rounded-lg text-sm font-medium text-white hover:bg-white/30 transition-all flex items-center justify-center gap-2 print:hidden cursor-pointer"
@@ -577,8 +577,8 @@ function App() {
 
               {currentStep === 'recommendations' && recommendations && recommendations.length > 0 && (
                 <div>
-                  <div className="m-8">
-                    <h2 className="text-primary mb-6 text-2xl font-semibold">Vaccine Recommendations</h2>
+                  <div className="mb-6 ml-8 mt-8">
+                    <h2 className="text-2xl font-semibold text-primary mb-4">Vaccine Recommendations</h2>
                     <p className="text-muted-foreground text-lg mb-4">
                       For {age} year old {gender.charAt(0).toUpperCase() + gender.slice(1)}
                       {selectedConditions.length > 0 && (
@@ -587,20 +587,7 @@ function App() {
                     </p>
                     <Button onClick={printRecommendations} variant="outline" size="sm" className="mb-4 print:hidden">
                       Print Recommendations
-                    </button>
-                  </div>
-
-                  <div className="completion-status">
-                    <strong>Vaccination Status: </strong> 
-                    {Object.values(checkedVaccines).filter(Boolean).length} of {recommendations.length} completed
-                    <div className="progress-bar">
-                      <div 
-                        className="progress-fill" 
-                        style={{
-                          width: `${(Object.values(checkedVaccines).filter(Boolean).length / recommendations.length) * 100}%`
-                        }}
-                      />
-                    </div>
+                    </Button>
                   </div>
 
                   <div className="mb-8">
@@ -617,18 +604,34 @@ function App() {
                         {recommendations.map((vaccine, index) => (
                           <TableRow 
                             key={index} 
-                            className={vaccine.name === 'COVID-19' || vaccine.name === 'Influenza (Flu)' ? 'highlighted' : ''}
+                            className={vaccine.name === 'COVID-19' || vaccine.name === 'Influenza (Flu)' ? 'bg-accent/10' : ''}
                           >
-                            <td className="vaccine-name">
-                              <span className={checkedVaccines[vaccine.name] ? 'vaccine-checked' : ''}>
-                                {vaccine.name}
-                              </span>
-                            </td>
-
-
-                            <td>{vaccine.description}</td>
-                            <td>
-                              <div>{vaccine.recommendation}</div>
+                            <TableCell className="align-top">
+                              <div className="font-semibold text-primary flex flex-col gap-2 items-start">
+                                <span>{vaccine.name}</span>
+                                {vaccine.previouslyReceived && (
+                                  <span className="text-xs text-muted-foreground">
+                                    Received {vaccine.dosesReceived || 0} dose{(vaccine.dosesReceived || 0) > 1 ? 's' : ''}{vaccine.lastReceivedDate ? ` (last: ${new Date(vaccine.lastReceivedDate).toLocaleDateString()})` : ''}
+                                  </span>
+                                )}
+                              </div>
+                            </TableCell>
+                            <TableCell className="align-top">{vaccine.description}</TableCell>
+                            <TableCell className="align-top">
+                              <div>
+                                {vaccine.needsMoreDoses && (
+                                  <div className="text-xs text-primary font-semibold block mb-2 flex items-start gap-2">
+                                    <AlertTriangle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                                    <span>You've received {vaccine.dosesReceived} of {vaccine.requiredDoses} required dose{vaccine.requiredDoses > 1 ? 's' : ''}. Additional dose{vaccine.requiredDoses - vaccine.dosesReceived > 1 ? 's' : ''} needed.</span>
+                                  </div>
+                                )}
+                                {vaccine.previouslyReceived && !vaccine.needsMoreDoses && (
+                                  <span className="text-xs text-muted-foreground block mb-2 italic">
+                                    You've completed the required doses ({vaccine.dosesReceived} of {vaccine.requiredDoses}). {vaccine.frequency.includes('booster') || vaccine.frequency.includes('annual') ? 'You may need a booster or updated dose.' : 'Please consult with your healthcare provider about timing for next dose.'}
+                                  </span>
+                                )}
+                                {vaccine.recommendation}
+                              </div>
                               {vaccine.conditionRecommendations && vaccine.conditionRecommendations.length > 0 && (
                                 <div className="mt-3 p-3 bg-muted rounded-md text-xs">
                                   {vaccine.conditionRecommendations.map((cr, idx) => (
