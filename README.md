@@ -35,7 +35,7 @@ A React + Vite web application that provides personalized vaccine recommendation
    ```
 4. Create .env with
    ```bash
-   GOOGLE_MAPS_API_KEY=[key]
+   GOOGLE_MAPS_API_KEY={key}
    ```
 
 ### Running the Application
