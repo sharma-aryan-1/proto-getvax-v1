@@ -371,14 +371,6 @@ function App() {
                     </button>
                   </div>
 
-                  <div className="priority-legend">
-                    <strong>Priority Indicators:</strong>
-                    <span className="legend-item high">High Priority</span>
-                    <span className="legend-item standard">Standard</span>
-                    <span className="legend-item caution">Use Caution</span>
-                    <span className="legend-item contraindicated">Contraindicated</span>
-                  </div>
-
                   <div className="completion-status">
                     <strong>Vaccination Status: </strong> 
                     {Object.values(checkedVaccines).filter(Boolean).length} of {recommendations.length} completed
@@ -423,15 +415,12 @@ function App() {
                         {recommendations.map((vaccine, index) => (
                           <tr 
                             key={index} 
-                            className={`priority-${vaccine.priority} ${vaccine.name === 'COVID-19' || vaccine.name === 'Influenza (Flu)' ? 'highlighted' : ''}`}
+                            className={vaccine.name === 'COVID-19' || vaccine.name === 'Influenza (Flu)' ? 'highlighted' : ''}
                           >
                             <td className="vaccine-name">
                               <span className={checkedVaccines[vaccine.name] ? 'vaccine-checked' : ''}>
                                 {vaccine.name}
                               </span>
-                              {vaccine.priority === 'high' && <span className="priority-badge high">HIGH PRIORITY</span>}
-                              {vaccine.priority === 'contraindicated' && <span className="priority-badge contraindicated">CONTRAINDICATED</span>}
-                              {vaccine.priority === 'caution' && <span className="priority-badge caution">CAUTION</span>}
                             </td>
 
 
