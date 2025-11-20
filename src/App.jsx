@@ -573,7 +573,7 @@ function App() {
                                     id={`doses-${index}`}
                                     type="number"
                                     min="0"
-                                    value={vaccineHistory[vaccine.name]?.doses || 1}
+                                    value={vaccineHistory[vaccine.name]?.doses || 0}
                                     onChange={(e) => handleVaccineHistoryChange(vaccine.name, 'doses', e.target.value)}
                                     className="max-w-xs"
                                     required
