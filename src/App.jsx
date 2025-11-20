@@ -24,6 +24,16 @@ function App() {
   const [selectedVaccinesForRequest, setSelectedVaccinesForRequest] = useState([])
   const [phoneNumber, setPhoneNumber] = useState('')
 
+
+  // NEW: location-finding state
+  const [zip, setZip] = useState('')
+  const [coords, setCoords] = useState(null)          // { lat, lng }
+  const [locations, setLocations] = useState([])      // nearby sites
+  const [loadingLocs, setLoadingLocs] = useState(false)
+  const [locError, setLocError] = useState('')
+  const [openLocationFor, setOpenLocationFor] = useState(null) // vaccine.name
+
+
   // Dark mode state
   const [darkMode, setDarkMode] = useState(() => {
     if (typeof window === 'undefined') return true
@@ -333,6 +343,34 @@ function App() {
     setPhoneNumber('')
   }
 
+  // remove old geocodeZip and fetchNearbyVaccineSites that hit Google directly
+
+  const fetchNearbyVaccineSites = async (zipCode) => {
+    const res = await fetch(`/api/nearby-vaccines?zip=${encodeURIComponent(zipCode)}`)
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}))
+      throw new Error(data.error || 'Unable to fetch nearby locations')
+    }
+    const data = await res.json()
+    return data.locations || []
+  }
+
+  const handleFindLocations = async (e) => {
+    e.preventDefault()
+    setLocError('')
+    setLoadingLocs(true)
+
+    try {
+      const sites = await fetchNearbyVaccineSites(zip)
+      setLocations(sites)
+    } catch (err) {
+      setLocError(err.message || 'Something went wrong.')
+      setLocations([])
+    } finally {
+      setLoadingLocs(false)
+    }
+  }
+
 
   const printRecommendations = () => {
     window.print()
@@ -448,7 +486,7 @@ function App() {
                 </div>
 
                 <div className="flex gap-4 mt-8 justify-center">
-                  <Button type="submit" className="flex-1 h-10">
+                  <Button type="submit" className="flex-1 h-10" >
                     Continue to Vaccine History
                   </Button>
                   <Button type="button" onClick={clearForm} variant="secondary" className="flex-1 h-10">
@@ -535,7 +573,7 @@ function App() {
                                     id={`doses-${index}`}
                                     type="number"
                                     min="0"
-                                    value={vaccineHistory[vaccine.name]?.doses || 0}
+                                    value={vaccineHistory[vaccine.name]?.doses || 1}
                                     onChange={(e) => handleVaccineHistoryChange(vaccine.name, 'doses', e.target.value)}
                                     className="max-w-xs"
                                     required
@@ -563,7 +601,7 @@ function App() {
                       ))}
                       
                       <div className="flex gap-4 mt-8">
-                        <Button onClick={submitVaccineHistory} className="flex-1">
+                        <Button onClick={submitVaccineHistory} className="flex-1" >
                           Continue to Recommendations
                         </Button>
                         <Button onClick={() => setCurrentStep('form')} variant="secondary" className="flex-1">
@@ -578,6 +616,15 @@ function App() {
               {currentStep === 'recommendations' && recommendations && recommendations.length > 0 && (
                 <div>
                   <div className="mb-6 ml-8 mt-8">
+                    <div className="bg-primary/10 border-l-4 border-primary p-4 rounded-md mb-6 max-w-2xl mx-auto">
+                      <h3 className="font-semibold mb-2 text-lg text-primary">You can still get protected!</h3>
+                      <p className="text-primary-dark">
+                        If you have missed any vaccines, it's not too late. Most people can catch up easily! Pharmacies and clinics are here to help.  
+                        Getting protected is fast, and you’ll feel better once it’s done.  
+                        If you’re worried, talk with your doctor or pharmacist. They’re happy to answer your questions.
+                      </p>
+                    </div>
+                  
                     <h2 className="text-2xl font-semibold text-primary mb-4">Vaccine Recommendations</h2>
                     <p className="text-muted-foreground text-lg mb-4">
                       For {age} year old {gender.charAt(0).toUpperCase() + gender.slice(1)}
@@ -649,32 +696,9 @@ function App() {
                     </Table>
                   </div>
 
-                  {/* {(recommendations.some(v => v.genderNote) || recommendations.some(v => v.priority === 'contraindicated')) && (
-                    <div className="special-notes">
-                      <h3>⚠️ Important Notes</h3>
-                      <ul>
-                        {recommendations
-                          .filter(v => v.priority === 'contraindicated')
-                          .map((vaccine, index) => (
-                            <li key={`contra-${index}`} className="contraindication-note">
-                              <strong>{vaccine.name}:</strong> This vaccine is contraindicated for your selected condition(s). 
-                              Do not receive this vaccine without consulting your healthcare provider.
-                            </li>
-                          ))}
-                        {recommendations
-                          .filter(v => v.genderNote)
-                          .map((vaccine, index) => (
-                            <li key={`gender-${index}`}>
-                              <strong>{vaccine.name}:</strong> {vaccine.genderNote}
-                            </li>
-                          ))}
-                      </ul>
-                    </div>
-                  )} */}
-
                   <div className="flex justify-center mt-8 mb-8">
-                    <Button onClick={proceedToVaccineRequest} size="lg" className="print:hidden">
-                      Would you like to receive any of these vaccines?
+                    <Button onClick={proceedToVaccineRequest} size="lg" className="print:hidden" >
+                      Choose vaccines to receive
                     </Button>
                   </div>
                 </div>
@@ -829,7 +853,48 @@ function App() {
                         ? 'Find locations to receive your vaccines or get more information.'
                         : 'Find locations to receive vaccines if you change your mind.'}
                     </CardDescription>
+                      
+                        {/* NEW: ZIP search form */}
+                        <div className="mt-4 space-y-2">
+                          <Label htmlFor="zip">ZIP code</Label>
+                          <form onSubmit={handleFindLocations} className="flex flex-col sm:flex-row gap-2 sm:items-end">
+                            <Input
+                              id="zip"
+                              type="text"
+                              inputMode="numeric"
+                              maxLength={5}
+                              value={zip}
+                              onChange={(e) => setZip(e.target.value)}
+                              placeholder="e.g., 94720"
+                              className="max-w-xs"
+                              required
+                            />
+                            <Button type="submit" className="sm:w-auto">
+                              Find locations near me
+                            </Button>
+                          </form>
+                          {loadingLocs && (
+                            <p className="text-sm text-muted-foreground">
+                              Searching for nearby pharmacies and clinics…
+                            </p>
+                          )}
+                          {locError && (
+                            <p className="text-sm text-destructive">
+                              {locError}
+                            </p>
+                          )}
+                          {locations.length === 0 && !loadingLocs && !locError && (
+                            <p className="text-xs text-muted-foreground">
+                              Enter your ZIP code to see nearby locations under each vaccine.
+                            </p>
+                          )}
+                        </div>
+
+
+
+
                   </CardHeader>
+
                   <CardContent>
                     <div className="space-y-6">
                       {/* Show vaccines that need location info */}
@@ -840,47 +905,91 @@ function App() {
                       ].map((vaccine, index) => (
                         <div key={index} className="p-4 border rounded-lg">
                           <div className="font-semibold text-lg mb-3">{vaccine.name}</div>
-                          <div className="space-y-3 text-sm">
-                            <div>
-                              <strong className="text-primary">Local Pharmacies:</strong>
-                              <ul className="list-disc list-inside ml-2 mt-1 space-y-1 text-muted-foreground">
-                                <li>
-                                  <a href="https://www.cvs.com/immunizations" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
-                                    CVS Pharmacy - Find locations and schedule
-                                  </a>
-                                </li>
-                                <li>
-                                  <a href="https://www.walgreens.com/topic/pharmacy/scheduler/vaccine-appointment.jsp" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
-                                    Walgreens - Schedule appointment
-                                  </a>
-                                </li>
-                                <li>
-                                  <a href="https://www.riteaid.com/pharmacy/services/vaccinations" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
-                                    Rite Aid - Vaccine services
-                                  </a>
-                                </li>
-                              </ul>
+                              <div className="space-y-3 text-sm">
+
+                              {/* NEW: toggle + collapsible nearby locations */}
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="sm"
+                                disabled={locations.length === 0}
+                                onClick={() =>
+                                  setOpenLocationFor(
+                                    openLocationFor === vaccine.name ? null : vaccine.name
+                                  )
+                                }
+                                className="px-0 text-primary"
+                              >
+                                {locations.length === 0
+                                  ? 'Enter your ZIP above to see nearby locations'
+                                  : openLocationFor === vaccine.name
+                                  ? 'Hide nearby locations'
+                                  : 'Show nearby locations near you'}
+                              </Button>
+
+                              {openLocationFor === vaccine.name && locations.length > 0 && (
+                                <div className="mt-2 p-3 bg-muted rounded-md space-y-2">
+                                  <p className="text-xs text-muted-foreground">
+                                    Showing general vaccine providers near {zip}. Call ahead to confirm they offer {vaccine.name}.
+                                  </p>
+                                  <ul className="space-y-2">
+                                    {locations.map((site) => (
+                                      <li key={site.id} className="border-b last:border-b-0 pb-2 last:pb-0">
+                                        <div className="flex justify-between items-center">
+                                          <span className="font-medium">{site.name}</span>
+                                          {site.rating && (
+                                            <span className="text-xs text-muted-foreground">
+                                              {site.rating.toFixed(1)}★
+                                            </span>
+                                          )}
+                                        </div>
+                                        <div className="text-xs text-muted-foreground">
+                                          {site.address}
+                                        </div>
+                                        <a
+                                          href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                                            `${site.name} ${site.address}`
+                                          )}`}
+                                          target="_blank"
+                                          rel="noreferrer"
+                                          className="text-xs text-primary hover:underline"
+                                        >
+                                          Open in Maps
+                                        </a>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              )}
+
+                              {/* Keep generic guidance below as fallback */}
+                              <div>
+                                <strong className="text-primary">Vaccine Clinics and Pharmacies:</strong>
+                                <ul className="list-disc list-inside ml-2 mt-1 space-y-1 text-muted-foreground">
+                                  <li>
+                                    <a
+                                      href="https://www.vaccines.gov/"
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="text-primary hover:underline"
+                                    >
+                                      vaccines.gov - Find vaccine locations near you
+                                    </a>
+                                  </li>
+                                  <li>
+                                    You can also search local pharmacies (CVS, Walgreens, Rite Aid) or your health system clinics.
+                                  </li>
+                                </ul>
+                              </div>
+                              <div>
+                                <strong className="text-primary">Primary Care Provider:</strong>
+                                <p className="text-muted-foreground ml-2 mt-1">
+                                  Contact your primary care provider to schedule an appointment for {vaccine.name}.
+                                </p>
+                              </div>
+
                             </div>
-                            <div>
-                              <strong className="text-primary">Vaccine Clinics:</strong>
-                              <ul className="list-disc list-inside ml-2 mt-1 space-y-1 text-muted-foreground">
-                                <li>
-                                  <a href="https://www.vaccines.gov/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
-                                    vaccines.gov - Find vaccine locations near you
-                                  </a>
-                                </li>
-                                <li>
-                                  Contact your local health department for community vaccination clinics
-                                </li>
-                              </ul>
-                            </div>
-                            <div>
-                              <strong className="text-primary">Primary Care Provider:</strong>
-                              <p className="text-muted-foreground ml-2 mt-1">
-                                Contact your primary care provider to schedule an appointment for {vaccine.name}.
-                              </p>
-                            </div>
-                          </div>
+
                         </div>
                       ))}
 
